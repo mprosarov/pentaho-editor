@@ -1,5 +1,6 @@
 :root{
-    --border-tab-color: red
+    --border-tab-color: #ff0000;
+    --text-color-active: #ff0000;
 }
 .tabs {
     width: 100%;
@@ -27,7 +28,7 @@
 
 /* Стили для активной вкладки */
 .tab-header__item.active {
-    color: red;
+    color: var(--text-color-active);
     position: relative;
     top: 1px;
     background-color: #fff;

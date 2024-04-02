@@ -1,6 +1,9 @@
 @import 'inputs-setting.scss';
 .setting-row{
     display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    gap: 10px;
 }
 .setting-block{
     font-size: small;
