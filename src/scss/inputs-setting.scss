@@ -1,0 +1,76 @@
+
+/*
+< !-- В конце -->
+    <div class="settingInput">
+        <input class="settingInput-field">
+        <button class="settingInput-item">…</button>
+    </div>
+< !-- В начале -->
+    <div class="settingInput">
+        <span class="settingInput-item">…</span>
+        <input class="settingInput-field">
+    </div>
+< !-- Оба -->
+<div class="settingInput">
+    <span class="settingInput-item">…</span>
+    <input class="settingInput-field">
+    <button class="settingInput-item">…</button>
+</div>
+*/
+$background-color: rgba(93, 101, 133, 0.1);
+$border-color: rgba(117, 117, 117, 0.25);
+$border-radius: 4px;
+$text-color: #5b5b5b;
+$focus-color: rgba(13, 110, 253, 0.5);
+$height: 30px;
+.settingInput {
+    display: flex;
+    // height: $height;
+    margin-bottom: 1em;
+    box-shadow: 0px 1px 4px 0px rgba(33, 37, 41, 0.05);
+}
+
+.settingInput-field {
+    flex: 1;
+    width: 100%;
+    // line-height: $height;
+    outline: none;
+}
+
+.settingInput-field:not(:first-child) {
+    border-left: 0;
+}
+
+.settingInput-field:not(:last-child) {
+    border-right: 0;
+}
+
+.settingInput-item {
+    background-color: $background-color;
+    color: $text-color;
+    font: inherit;
+    font-weight: normal;
+    // line-height: $height;
+}
+
+.settingInput-field,
+.settingInput-item {
+    border: 1px solid $border-color;
+    // padding-left: 0.5em;
+    // padding-right: 0.5em;
+    padding: 5px 0.5em;
+}
+
+.settingInput-field:first-child,
+.settingInput-item:first-child {
+    border-radius: $border-radius 0 0 $border-radius;
+}
+
+.settingInput-field:last-child,
+.settingInput-item:last-child {
+    border-radius: 0 $border-radius $border-radius 0;
+}
+
+.settingInput-field:focus{
+    border: 1px solid $focus-color;
+}

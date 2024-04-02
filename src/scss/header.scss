@@ -1,0 +1,27 @@
+.header-left{
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+.logo{
+    margin-left:10px;
+}
+.logo>img{
+    height: 40px;
+}
+.logo_text{
+    font-weight: bold;
+    font-size: 20px;
+    color: #343434;
+}
+.header-center{
+    flex: 1;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+.header-right{
+    display: flex;
+    padding: 5px;
+    padding-right: 10px;
+}

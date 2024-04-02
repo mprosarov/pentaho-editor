@@ -1,0 +1,52 @@
+.tabs {
+    width: 100%;
+    //max-width: 500px;
+}
+
+/* Стили для списка вкладок */
+.tab-header {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+/* Стили для вкладки */
+.tab-header__item {
+    padding: 10px 20px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-bottom: none;
+}
+
+/* Стили для активной вкладки */
+.tab-header__item.active {
+    color: red;
+    position: relative;
+    top: 1px;
+    background-color: #fff;
+    border-color: red;
+
+}
+
+/* Стиль для списка контейнеров с содержимым вкладок */
+.tab-content {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Стили для контейнера с содержимым вкладки */
+.tab-content__item {
+    display: none;
+    padding: 20px;
+    border: 1px solid red;
+}
+
+/* Стили для активного контейнера вкладки */
+.tab-content__item.active {
+    display: block;
+}

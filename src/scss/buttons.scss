@@ -1,0 +1,31 @@
+.button{
+    font-size: larger;
+}
+.header-button{
+    border:1px solid transparent;
+    background: none;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+.header-button:hover {
+    cursor: pointer;
+    border-color: #dee2e6;
+    background: none;
+}
+
+.header-button>img{
+    height: 18px;
+}
+.header-button_action{
+    border: none;
+    background: #0d6efd;
+    color: white;
+    border-radius: 3px;
+    padding: 0 15px;
+    font-weight: 500;
+    transition: all .3s;
+}
+.header-button_action:hover{
+    cursor: pointer;
+    background: #0b5ed7;
+}

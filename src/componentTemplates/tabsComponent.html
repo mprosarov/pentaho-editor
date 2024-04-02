@@ -1,0 +1,60 @@
+<template id="tabs-component">
+    <div class="tabs">
+        <ul class="tab-header">
+            <li class="tab-header__item js-tab-trigger active" data-tab="1">Первая</li>
+            <li class="tab-header__item js-tab-trigger" data-tab="2">Вторая</li>
+            <li class="tab-header__item js-tab-trigger" data-tab="3">Третья</li>
+        </ul>
+        <ul class="tab-content">
+            <li class="tab-content__item js-tab-content active" data-tab="1">
+                Далеко-далеко за словесными, горами в стране гласных и согласных живут рыбные тексты.
+            </li>
+            <li class="tab-content__item js-tab-content" data-tab="2">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum rem laboriosam cum repudiandae natus
+                corrupti?
+            </li>
+            <li class="tab-content__item js-tab-content" data-tab="3">
+                Далеко-далеко за словесными горами.
+            </li>
+        </ul>
+    </div>
+</template>
+<template id="base-setting">
+    <div class="setting-block">
+        <div class="s-title">Внутренние отступы</div>
+        <div class="settingInput">
+            <span class="settingInput-item">Все</span>
+            <input data-setting="base-padding" class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+        <div class="settingInput">
+            <span class="settingInput-item">Слева</span>
+            <input data-setting="left-padding" class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+        <div class="settingInput">
+            <span class="settingInput-item">Справа</span>
+            <input class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+        <div class="settingInput">
+            <span class="settingInput-item">Сверху</span>
+            <input class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+        <div class="settingInput">
+            <span class="settingInput-item">Снизу</span>
+            <input class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+    </div>
+    <div class="setting-block">
+        <div class="s-title">Внешние отступы</div>
+        <div class="settingInput">
+            <span class="settingInput-item">Все</span>
+            <input class="settingInput-field">
+            <button class="settingInput-item">px</button>
+        </div>
+    </div>
+
+</template>
