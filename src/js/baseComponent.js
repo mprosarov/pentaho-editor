@@ -18,14 +18,15 @@ class HtmlComponent {
   onClick(e){
     this.#node.classList.add("selected-click");
     this.eventsObj.click(this);
-    console.log("click component", this);
+    // console.log("click component", this);
+    console.log("click component. Base");
   }
   select(){
     this.#node.classList.add("selected-click");
   }
   unselect(){
     this.#node.classList.remove("selected-click");
-    console.log("unselect component", this);
+    console.log("unselect component");
   }
   on(eventName,clbk){
     let evnt = this.eventsObj[eventName];
@@ -38,17 +39,25 @@ class HtmlComponent {
     return document.getElementById('base-setting').innerHTML;
   }
   initSettingsEvents(parentSetting){
-    let styles = window.getComputedStyle(this.#node);
+    //let styles = window.getComputedStyle(this.#node);
+    let styles = window.getComputedStyle(this.nodeElement);
     let paddingInput = parentSetting.querySelector('[data-setting="base-padding"]')
-    paddingInput.value = parseInt(window.getComputedStyle(this.#node).padding);
-    let paddingLeftInput = parentSetting.querySelector('[data-setting="left-padding"]')
-    paddingLeftInput.value = parseInt(styles.paddingLeft);
+    let paddingLeftInput = parentSetting.querySelector('[data-setting="left-padding"]');
+    let paddingRightinput = parentSetting.querySelector('[data-setting="right-padding"]');
+    let paddingTopInput = parentSetting.querySelector('[data-setting="top-padding"]');
+    let paddingBottomInput = parentSetting.querySelector('[data-setting="bottom-padding"]');
     let that = this;
+    updateAllPadding();
+
     function updateAllPadding(){
-      paddingLeftInput.value = parseInt(window.getComputedStyle(this.#node).paddingLeft);
+      paddingInput.value = parseInt(styles.padding);
+      paddingLeftInput.value = parseInt(styles.paddingLeft);
+      paddingRightinput.value = parseInt(styles.paddingRight);
+      paddingTopInput.value = parseInt(styles.paddingTop);
+      paddingBottomInput.value = parseInt(styles.paddingBottom);
     }
     paddingInput.onchange = function(){
-      that.#node.style.padding = paddingInput.value + 'px';
+      that.nodeElement.style.padding = paddingInput.value + 'px';
       updateAllPadding();
     }
 

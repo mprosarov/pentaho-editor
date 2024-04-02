@@ -3,7 +3,7 @@
 //= headerComponent.js
 //= tabsComponent.js
 var Editor = (function() {
-  $("#page-zone").sortable();
+  $("#page-zone").sortable({distance:5});
   let $setting = $("#right-sidebar");
   let selectedComponent = null;
   function unselectAll(){
@@ -22,10 +22,10 @@ var Editor = (function() {
   });
   let pageHTML = document.getElementById("page-zone");
   let components = [];
-  let addComponent = function(type) {
+  let addComponent = function(type,parentNode = pageHTML) {
     // Создаем новый компонент и добавляем в массив всех компонентов
     if(type == 'header'){
-      let h = new H(pageHTML);
+      let h = new H(parentNode);
       h.on('click',clickElement);
       components.push(h)
       // components.push(
@@ -33,7 +33,7 @@ var Editor = (function() {
       // );
     }
     if(type == 'tabs'){
-      let tabsComp = new TabsComponent(pageHTML);
+      let tabsComp = new TabsComponent(parentNode);
       tabsComp.on('click',clickElement);
       components.push(tabsComp);
     }
@@ -46,7 +46,7 @@ var Editor = (function() {
     }
     selectedComponent = el;
     el.select();
-    console.log(el)
+    // console.log(el)
     showSetting(selectedComponent);
   }
   let showSetting = function(comp){
@@ -67,7 +67,9 @@ $(".component-item").draggable({
 });
 
 $(".dropped-zone").droppable({
+  greedy:true,
   drop: function (event, ui) {
+    console.log('DROP IN PAGE');
     Editor.addComponent(ui.draggable[0].dataset["type"]);
   },
 });

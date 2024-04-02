@@ -1,3 +1,6 @@
+:root{
+    --border-tab-color: red
+}
 .tabs {
     width: 100%;
     //max-width: 500px;
@@ -28,7 +31,7 @@
     position: relative;
     top: 1px;
     background-color: #fff;
-    border-color: red;
+    border-color: var(--border-tab-color);
 
 }
 
@@ -43,10 +46,19 @@
 .tab-content__item {
     display: none;
     padding: 20px;
-    border: 1px solid red;
+    border: 1px solid  var(--border-tab-color);
 }
 
 /* Стили для активного контейнера вкладки */
 .tab-content__item.active {
     display: block;
+}
+
+.tab-content__item:empty::before{
+    content: "Перетащите сюда необходимые компоненты";
+    text-align: center;
+    display: block;
+    font-weight: 400;
+    font-size: 26px;
+    color: #696969;
 }

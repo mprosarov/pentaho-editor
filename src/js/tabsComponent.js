@@ -34,7 +34,7 @@ class TabsComponent extends HtmlComponent {
           content = this.parentNode.parentNode.querySelector('.js-tab-content[data-tab="' + id + '"]'),
           activeTrigger = this.parentNode.parentNode.querySelector('.js-tab-trigger.active'),
           activeContent = this.parentNode.parentNode.querySelector('.js-tab-content.active');
-        console.log(this.parentNode.parentNode.innerHTML)
+          console.log(activeContent)
 
 
         activeTrigger.classList.remove('active');
@@ -47,7 +47,8 @@ class TabsComponent extends HtmlComponent {
   }
   getSettings(){
     let setingsHTML = super.getSettings()
-    let tabs = this.nodeElement.querySelectorAll('.tab-header__item');
+    setingsHTML += document.getElementById('tabs-settings').innerHTML;
+    let tabs = this.nodeElement.querySelector('.tab-header').querySelectorAll('.tab-header__item');
     for (let i = 0; i < tabs.length;i++){
       setingsHTML+=`<div>Вкладка-${i+1}<div><div><input data-inp="tab" data-tab="${tabs[i].dataset.tab}" type="text" value="${tabs[i].innerText}"/> <button>УД</button>  </div>`
     }
@@ -64,14 +65,21 @@ class TabsComponent extends HtmlComponent {
       let headers = parent.querySelector('.tab-header');
       let content = parent.querySelector(".tab-content");
       headers.innerHTML += `<li class="tab-header__item js-tab-trigger" data-tab="${headers.childElementCount+1}">${headers.childElementCount+1}</li>`;
-      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${
-        content.childElementCount + 1
-      }">Далеко-далеко за словесными горами.
-            </li>`;
-      that.setEvents();
+      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${content.childElementCount + 1}"></li>`;
+      let newTabContent = content.lastElementChild;
+      $(newTabContent).droppable({
+        greedy: true,
+        drop: function (event, ui) { console.log('DROP IN COMPONENT'); Editor.addComponent(ui.draggable[0].dataset["type"], newTabContent); event.stopPropagation(); }
+      })
+      that.setEvents(parentSetting);
       that.init();
     }
   }
+//   $(".dropped-zone").droppable({
+//     drop: function (event, ui) {
+//       Editor.addComponent(ui.draggable[0].dataset["type"]);
+//     },
+// });
   setEvents(parentSetting ){
     let parent = this.nodeElement;
     let inputs = parentSetting.querySelectorAll('[data-inp]');
@@ -80,6 +88,9 @@ class TabsComponent extends HtmlComponent {
         let tabNum = this.dataset.tab;
         parent.querySelector(`[data-tab="${tabNum}"]`).innerText = this.value;
       }
+    }
+    parentSetting.querySelector('[data-inp-st="active-tab-color"]').oninput = function(){
+      parent.style.setProperty('--border-tab-color',this.value)
     }
   }
 }

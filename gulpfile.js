@@ -24,6 +24,7 @@ exports.default = function(){
     });
     watch("src/*.html",buildRigger);
     watch("src/blocks/*.html", buildRigger);
+    watch("src/componentTemplates/*.html", buildRigger);
     watch("src/scss/*.scss",styles);
     watch("src/js/*.js", buildRigger);
 }
