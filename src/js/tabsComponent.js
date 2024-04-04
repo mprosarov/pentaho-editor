@@ -89,7 +89,7 @@ class TabsComponent extends HtmlComponent {
           <div class="settingInput">
               <span class="settingInput-item">#${i}</span>
               <input class="settingInput-field" data-input="tabtext" value="${tabs[i].innerText}" data-tab="${tabs[i].dataset.tab}">
-              <button class="settingInput-item"><img width="20px" src="img/trash-4.svg"></button>
+              <button class="settingInput-item" data-btn="del-tab" data-tab="${tabs[i].dataset.tab}"><img width="20px" src="img/trash-4.svg"></button>
           </div>
         </div>
       </div> `;
@@ -137,14 +137,13 @@ class TabsComponent extends HtmlComponent {
     let parent = this.nodeElement;
     //Добавить вкладку
     parentSetting.querySelector('[data-btn="add-tab"]').onclick = function () {
+      let tabUID = that.getUID();
       let headers = parent.querySelector(".tab-header");
       let content = parent.querySelector(".tab-content");
-      headers.innerHTML += `<li class="tab-header__item js-tab-trigger" data-tab="${
-        headers.childElementCount + 1
-      }">Вкладка-${headers.childElementCount + 1}</li>`;
-      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${
-        content.childElementCount + 1
-      }"></li>`;
+      headers.innerHTML += `<li class="tab-header__item js-tab-trigger" data-tab="${tabUID}">
+                              Вкладка-${headers.childElementCount + 1}
+                            </li>`;
+      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${tabUID}"></li>`;
       let newTabContent = content.lastElementChild;
       $(newTabContent).droppable({
         greedy: true,
@@ -171,6 +170,29 @@ class TabsComponent extends HtmlComponent {
     parentSetting.querySelector('[data-inp-st="active-tab-text-color"]').oninput = function () {
       parent.style.setProperty(that.cssActiveColor, this.value);
     };
+    $(parentSetting).find('[data-btn="del-tab"]').click(function(){
+      let dataTab = this.dataset.tab;
+      let tabHeader,tabContent;
+      if(that.nodeElement.firstElementChild.childElementCount==1){
+        alert('Должна быть хотя бы одна вкладка');
+        return;
+      }
+      tabHeader = that.nodeElement.querySelector(`.tab-header>li[data-tab="${dataTab}"]`);
+      tabContent = that.nodeElement.querySelector(`.tab-content>li[data-tab="${dataTab}"]`);
+      if(!tabHeader || !tabContent){
+        throw "Не удалось найти вкладку или тело вкладки, либо некорректная сруктура";
+      }
+      let wasActiveTab = tabHeader.classList.contains('active')?true:false;
+      tabHeader.parentNode.removeChild(tabHeader);
+      tabContent.parentNode.removeChild(tabContent);
+      if(wasActiveTab){
+        that.nodeElement.firstElementChild.firstElementChild.classList.add("active");
+        that.nodeElement.querySelector('.tab-content>li:first-child').classList.add("active");
+      }
+      that.createTabsControl(parentSetting);
+      that.setEvents(parentSetting);
+      that.init();
+    });
     //Цвет рамки неактивных вкладок
     parentSetting.querySelector(this.inputsColor.border).oninput = ()=>{
       parent.style.setProperty(that.cssTabBorderColor, event.target.value);

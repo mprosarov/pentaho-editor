@@ -15,6 +15,9 @@ class HtmlComponent {
   eventsObj = {
     'click': function() { return false }
   }
+  getUID(){
+    return window.crypto.randomUUID();
+  }
   onClick(e){
     this.#node.classList.add("selected-click");
     this.eventsObj.click(this);
