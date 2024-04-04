@@ -14,7 +14,10 @@
 </template>
 <template id="tabs-settings">
     <div class="setting-block">
-        <div class="s-title">Оформление</div>
+        <div class="s-title">
+            <div class="s-title_text">Оформление</div>
+            <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+        </div>
         <div class="setting-content">
             <div class="setting-row">
                 <div class="setting-col">
@@ -32,9 +35,16 @@
                     <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-text-color" type="color">
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div class="setting-block">
+        <div class="s-title">
+            <div class="s-title_text">Управление вкладками</div>
+            <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+        </div>
+        <div class="setting-content" >
+            <div data-section="tabs-control"></div>
 
         </div>
-
     </div>
 </template>

@@ -39,28 +39,79 @@ class HtmlComponent {
     return document.getElementById('base-setting').innerHTML;
   }
   initSettingsEvents(parentSetting){
-    //let styles = window.getComputedStyle(this.#node);
+    parentSetting.onclick = function(){
+      let toggleBlock = event.target.closest('.s-title_action');
+      if (!toggleBlock) return;
+      if (!toggleBlock.parentNode.nextElementSibling.classList.contains('setting-content')) return;
+      toggleBlock.classList.toggle('close');
+      $(toggleBlock.parentNode.nextElementSibling).toggle( 'blind', 300 );
+    }
+
     let styles = window.getComputedStyle(this.nodeElement);
+    // Настройка padding
     let paddingInput = parentSetting.querySelector('[data-setting="base-padding"]')
     let paddingLeftInput = parentSetting.querySelector('[data-setting="left-padding"]');
     let paddingRightinput = parentSetting.querySelector('[data-setting="right-padding"]');
     let paddingTopInput = parentSetting.querySelector('[data-setting="top-padding"]');
     let paddingBottomInput = parentSetting.querySelector('[data-setting="bottom-padding"]');
+    // Настройка margin
+    let marginAllinput = parentSetting.querySelector('[data-setting="base-all-margin"]');
+    let marginLeftInput = parentSetting.querySelector('[data-setting="base-left-margin"]');
+    let marginRightInput = parentSetting.querySelector('[data-setting="base-right-margin"]');
+    let marginTopInput = parentSetting.querySelector('[data-setting="base-top-margin"]');
+    let marginBottomInput = parentSetting.querySelector('[data-setting="base-bottom-margin"]');
     let that = this;
     updateAllPadding();
-
+    updateAllMarginInputs()
+    //Обновить все значения в полях ввода padding'a
     function updateAllPadding(){
-      paddingInput.value = parseInt(styles.padding);
+      if(styles.padding.split(' ').length>1) paddingInput.value = '';
+      else paddingInput.value = parseInt(styles.padding);
       paddingLeftInput.value = parseInt(styles.paddingLeft);
       paddingRightinput.value = parseInt(styles.paddingRight);
       paddingTopInput.value = parseInt(styles.paddingTop);
       paddingBottomInput.value = parseInt(styles.paddingBottom);
-    }
+    };
+    //Обвновить все значения в полях ввода margin'ов
+    function updateAllMarginInputs(){
+      if(styles.margin.split(' ').length>1) marginAllinput.value = '';
+      else marginAllinput.value = parseInt(styles.margin);
+      marginLeftInput.value = parseInt(styles.marginLeft);
+      marginRightInput.value = parseInt(styles.marginRight);
+      marginTopInput.value = parseInt(styles.marginTop);
+      marginBottomInput.value = parseInt(styles.marginBottom);
+    };
+    //====== Установка внешних отступов(padding'ов) ======
     paddingInput.onchange = function(){
       that.nodeElement.style.padding = paddingInput.value + 'px';
       updateAllPadding();
     }
-
+    paddingLeftInput.onchange = () => {
+      that.nodeElement.style.paddingLeft = paddingLeftInput.value + 'px';
+      updateAllPadding()
+    }
+    paddingRightinput.onchange = () => {
+      that.nodeElement.style.paddingRight = paddingRightinput.value + 'px';
+      updateAllPadding()
+    }
+    paddingTopInput.onchange = () => {
+      that.nodeElement.style.paddingTop = paddingTopInput.value + 'px';
+      updateAllPadding()
+    }
+    paddingBottomInput.onchange = () => {
+      that.nodeElement.style.paddingBottom = paddingBottomInput.value + 'px';
+      updateAllPadding()
+    }
+    //====== Установка внутренних отступов(margin'ов) ======
+    function setMarginStyle(inp,styleName){
+      that.nodeElement.style[styleName] = inp.value + 'px';
+      updateAllMarginInputs();
+    }
+    marginAllinput.onchange = () => { setMarginStyle(marginAllinput,'margin'); }
+    marginLeftInput.onchange = () => { setMarginStyle(marginLeftInput, 'marginLeft'); }
+    marginRightInput.onchange = () => { setMarginStyle(marginRightInput, 'marginRight'); }
+    marginTopInput.onchange = () => { setMarginStyle(marginTopInput, 'marginTop'); }
+    marginBottomInput.onchange = () => { setMarginStyle(marginBottomInput, 'marginBottom'); }
   }
 
 }

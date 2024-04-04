@@ -18,7 +18,7 @@ html,body{
 }
 .selected-click{
     outline: 1px dashed rgba(3, 89, 143, 0.333);
-    background-color: #0098ff24;
+    background-color: rgba(0,152,255,0.05);
 }
 .app-header{
     display: flex;
@@ -39,6 +39,7 @@ html,body{
     background-color: white;
     flex: 1;
     overflow: auto;
+    scrollbar-width: thin;
 }
 .dropped-zone{
 

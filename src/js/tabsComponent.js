@@ -3,19 +3,15 @@ class H extends HtmlComponent {
     super("header-component", parentNode);
   }
   getSettings() {
-    let paretnSetting = super.getSettings();
-    return (paretnSetting += `
-    <div class="setting-block">
-      <div class="s-title">Текст заголовка</div>
-        <div class="settingInput">
-            <input data-inp="h" class="settingInput-field" value="${this.nodeElement.innerText}">
-        </div>
-    </div>`);
+    let settings = super.getSettings();
+    settings += document.getElementById('header-settings').innerHTML;
+    return settings;
   }
   initSettingsEvents(parentSetting) {
     let node = this.nodeElement;
+    parentSetting.querySelector('input[data-inp="header-value"]').value = this.nodeElement.innerText;
     super.initSettingsEvents(parentSetting);
-    parentSetting.querySelector('input[data-inp="h"]').oninput = function () {
+    parentSetting.querySelector('input[data-inp="header-value"]').oninput = function () {
       node.innerText = this.value;
     };
   }
@@ -63,47 +59,41 @@ class TabsComponent extends HtmlComponent {
   getSettings() {
     let setingsHTML = super.getSettings();
     setingsHTML += document.getElementById("tabs-settings").innerHTML;
+    return setingsHTML;
+  }
+  createTabsControl(parentSetting){
+    // Вывести все вкладки в настройки
+    let tabsSectionControl = parentSetting.querySelector(
+      '[data-section="tabs-control"]'
+    );
     let tabs = this.nodeElement
       .querySelector(".tab-header")
       .querySelectorAll(".tab-header__item");
+    let tabsHTML = "";
     for (let i = 0; i < tabs.length; i++) {
-      setingsHTML += `<div>Вкладка-${
-        i + 1
-      }<div><div><input data-inp="tab" data-tab="${
-        tabs[i].dataset.tab
-      }" type="text" value="${
-        tabs[i].innerText
-      }"/> <button>УД</button>  </div>`;
+      tabsHTML += `<div class="setting-row">
+        <div class="setting-col">
+          <div class="settingInput">
+              <span class="settingInput-item">#${i}</span>
+              <input class="settingInput-field" data-input="tabtext" value="${tabs[i].innerText}" data-tab="${tabs[i].dataset.tab}">
+              <button class="settingInput-item"><i class="icon icon-delete"></i></button>
+          </div>
+        </div>
+      </div> `;
     }
-    setingsHTML += '<button data-btn="add">Добавить вкладку</button>';
-    return setingsHTML;
+    tabsHTML += `<div class="setting-row">
+                <button data-btn="add-tab" class="button-setting">Добавить вкладку</button>
+            </div>`;
+    tabsSectionControl.innerHTML = tabsHTML;
   }
   initSettingsEvents(parentSetting) {
     let parent = this.nodeElement;
     super.initSettingsEvents(parentSetting);
+    this.createTabsControl(parentSetting);
     this.setEvents(parentSetting);
     let that = this;
-    //Добавить вкладку
-    parentSetting.querySelector('[data-btn="add"]').onclick = function () {
-      let headers = parent.querySelector(".tab-header");
-      let content = parent.querySelector(".tab-content");
-      headers.innerHTML += `<li class="tab-header__item js-tab-trigger" data-tab="${
-        headers.childElementCount + 1
-      }">${headers.childElementCount + 1}</li>`;
-      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${
-        content.childElementCount + 1
-      }"></li>`;
-      let newTabContent = content.lastElementChild;
-      $(newTabContent).droppable({
-        greedy: true,
-        drop: function (event, ui) {
-          Editor.addComponent(ui.draggable[0].dataset["type"], newTabContent);
-          event.stopPropagation();
-        },
-      });
-      that.setEvents(parentSetting);
-      that.init();
-    };
+
+
     //Цвет активной рамки
     let inpAciveBorderColor = parentSetting.querySelector(
       '[data-inp-st="active-tab-color"]'
@@ -122,18 +112,43 @@ class TabsComponent extends HtmlComponent {
   setEvents(parentSetting) {
     let that = this;
     let parent = this.nodeElement;
-    let inputs = parentSetting.querySelectorAll("[data-inp]");
+    //Добавить вкладку
+    parentSetting.querySelector('[data-btn="add-tab"]').onclick = function () {
+      let headers = parent.querySelector(".tab-header");
+      let content = parent.querySelector(".tab-content");
+      headers.innerHTML += `<li class="tab-header__item js-tab-trigger" data-tab="${
+        headers.childElementCount + 1
+      }">Вкладка-${headers.childElementCount + 1}</li>`;
+      content.innerHTML += `<li class="tab-content__item js-tab-content" data-tab="${
+        content.childElementCount + 1
+      }"></li>`;
+      let newTabContent = content.lastElementChild;
+      $(newTabContent).droppable({
+        greedy: true,
+        drop: function (event, ui) {
+          Editor.addComponent(ui.draggable[0].dataset["type"], newTabContent);
+          event.stopPropagation();
+        },
+      });
+      that.createTabsControl(parentSetting);
+      that.setEvents(parentSetting);
+      that.init();
+    };
+    let inputs = parentSetting.querySelectorAll('[data-input="tabtext"]');
     for (let i = 0; i < inputs.length; i++) {
       inputs[i].oninput = function () {
         let tabNum = this.dataset.tab;
         parent.querySelector(`[data-tab="${tabNum}"]`).innerText = this.value;
       };
     }
-    parentSetting.querySelector('[data-inp-st="active-tab-color"]').oninput = function () {
+    parentSetting.querySelector('[data-inp-st="active-tab-color"]').oninput =
+      function () {
         parent.style.setProperty("--border-tab-color", this.value);
-    };
-    parentSetting.querySelector('[data-inp-st="active-tab-text-color"]').oninput = function () {
-        parent.style.setProperty(that.cssActiveColor, this.value);
+      };
+    parentSetting.querySelector(
+      '[data-inp-st="active-tab-text-color"]'
+    ).oninput = function () {
+      parent.style.setProperty(that.cssActiveColor, this.value);
     };
   }
 }
