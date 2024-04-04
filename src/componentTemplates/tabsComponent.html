@@ -1,5 +1,5 @@
 <template id="tabs-component">
-    <div class="tabs" style="padding: 20px;">
+    <div class="tabs" style="padding: 20px;--tab-header-bg-active:#ffffff;--tab-border-color:#dddddd;--tab-text-color: #000000;--tab-header-bg: rgba(255,255,255,0);--tab-content-bg:#ffffff;">
         <ul class="tab-header">
             <li class="tab-header__item js-tab-trigger active" data-tab="1">Первая</li>
             <li class="tab-header__item js-tab-trigger" data-tab="2">Вторая</li>
@@ -13,6 +13,7 @@
     </div>
 </template>
 <template id="tabs-settings">
+    <h4 class="s-main-title">Настройки компонента</h4>
     <div class="setting-block">
         <div class="s-title">
             <div class="s-title_text">Оформление</div>
@@ -29,10 +30,51 @@
             </div>
             <div class="setting-row">
                 <div class="setting-col">
+                    Цвет рамки неактивного таба
+                </div>
+                <div class="settingInput">
+                    <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-border-color" type="color">
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-col">
                     Цвет текста активного таба
                 </div>
                 <div class="settingInput">
                     <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-text-color" type="color">
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-col">
+                    Цвет текста неактивного таба
+                </div>
+                <div class="settingInput">
+                    <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-text-color" type="color">
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-col">
+                    Фон заголовка активной вкладки
+                </div>
+                <div class="settingInput">
+                    <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-header-bg" type="color">
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-col">
+                    Фон заголовка неактивной вкладки
+                </div>
+                <div class="settingInput">
+                    <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-header-bg" type="color">
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-col">
+                    Фон контента вкладки
+                </div>
+                <div class="settingInput">
+                    <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-content-bg" type="color">
                 </div>
             </div>
         </div>

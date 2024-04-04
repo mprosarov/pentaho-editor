@@ -18,6 +18,19 @@ class H extends HtmlComponent {
 }
 class TabsComponent extends HtmlComponent {
   cssActiveColor = "--text-color-active";
+  cssActiveTabColor = '--border-tab-color-active';
+  cssActiveTabHeaderBg = '--tab-header-bg-active';
+  cssTabBorderColor = '--tab-border-color';
+  cssTabTextColor = '--tab-text-color';
+  cssTabHeaderBg = '--tab-header-bg';
+  cssTabContentBg = '--tab-content-bg';
+  inputsColor = {
+    border:'[data-inp-st="tab-border-color"]',
+    text: '[data-inp-st="tab-text-color"]',
+    activeHeaderBg: '[data-inp-st="active-tab-header-bg"]',
+    headerBg: '[data-inp-st="tab-header-bg"]',
+    contentBg: '[data-inp-st="tab-content-bg"]'
+  };
   constructor(parentNode) {
     super("tabs-component", parentNode);
     this.init();
@@ -76,7 +89,7 @@ class TabsComponent extends HtmlComponent {
           <div class="settingInput">
               <span class="settingInput-item">#${i}</span>
               <input class="settingInput-field" data-input="tabtext" value="${tabs[i].innerText}" data-tab="${tabs[i].dataset.tab}">
-              <button class="settingInput-item"><i class="icon icon-delete"></i></button>
+              <button class="settingInput-item"><img width="20px" src="img/trash-4.svg"></button>
           </div>
         </div>
       </div> `;
@@ -92,7 +105,7 @@ class TabsComponent extends HtmlComponent {
     this.createTabsControl(parentSetting);
     this.setEvents(parentSetting);
     let that = this;
-
+    let cssStyles = window.getComputedStyle(parent);
 
     //Цвет активной рамки
     let inpAciveBorderColor = parentSetting.querySelector(
@@ -100,7 +113,7 @@ class TabsComponent extends HtmlComponent {
     );
     inpAciveBorderColor.value = window
       .getComputedStyle(parent)
-      .getPropertyValue("--border-tab-color");
+      .getPropertyValue(this.cssActiveTabColor);
     //Цвет текста активной рамки
     let inpActiveColorText = parentSetting.querySelector(
       '[data-inp-st="active-tab-text-color"]'
@@ -108,6 +121,16 @@ class TabsComponent extends HtmlComponent {
     inpActiveColorText.value = window
       .getComputedStyle(parent)
       .getPropertyValue(this.cssActiveColor);
+    //Цвет рамки неактивных вкладок
+    parentSetting.querySelector(this.inputsColor.border).value = cssStyles.getPropertyValue(this.cssTabBorderColor);
+    //Цвет текста неактивного таба
+    parentSetting.querySelector(this.inputsColor.text).value = cssStyles.getPropertyValue(this.cssTabTextColor);
+    //Фон заголовка активной вкладки
+    parentSetting.querySelector(this.inputsColor.activeHeaderBg).value = cssStyles.getPropertyValue(this.cssActiveTabHeaderBg);
+    //Фон заголовка неактивной вкладки
+    parentSetting.querySelector(this.inputsColor.headerBg).value = cssStyles.getPropertyValue(this.cssTabHeaderBg);
+    //Фон контента вкладки
+    parentSetting.querySelector(this.inputsColor.contentBg).value = cssStyles.getPropertyValue(this.cssTabContentBg);
   }
   setEvents(parentSetting) {
     let that = this;
@@ -143,12 +166,30 @@ class TabsComponent extends HtmlComponent {
     }
     parentSetting.querySelector('[data-inp-st="active-tab-color"]').oninput =
       function () {
-        parent.style.setProperty("--border-tab-color", this.value);
+        parent.style.setProperty(that.cssActiveTabColor, this.value);
       };
-    parentSetting.querySelector(
-      '[data-inp-st="active-tab-text-color"]'
-    ).oninput = function () {
+    parentSetting.querySelector('[data-inp-st="active-tab-text-color"]').oninput = function () {
       parent.style.setProperty(that.cssActiveColor, this.value);
+    };
+    //Цвет рамки неактивных вкладок
+    parentSetting.querySelector(this.inputsColor.border).oninput = ()=>{
+      parent.style.setProperty(that.cssTabBorderColor, event.target.value);
+    };
+    //Цвет текста неактивного таба
+    parentSetting.querySelector(this.inputsColor.text).oninput = () => {
+      parent.style.setProperty(that.cssTabTextColor, event.target.value);
+    };
+    //Фон заголовка активной вкладки
+    parentSetting.querySelector(this.inputsColor.activeHeaderBg).oninput = () => {
+      parent.style.setProperty(that.cssActiveTabHeaderBg, event.target.value);
+    };
+    //Фон заголовка неактивной вкладки
+    parentSetting.querySelector(this.inputsColor.headerBg).oninput = () => {
+      parent.style.setProperty(that.cssTabHeaderBg, event.target.value);
+    };
+    //Фон контента вкладки
+    parentSetting.querySelector(this.inputsColor.contentBg).oninput = () => {
+      parent.style.setProperty(that.cssTabContentBg, event.target.value);
     };
   }
 }

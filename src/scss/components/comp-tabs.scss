@@ -1,6 +1,11 @@
 :root{
-    --border-tab-color: #ff0000;
+    --border-tab-color-active: #ff0000;
     --text-color-active: #ff0000;
+    --tab-header-bg-active: #ffffff;
+    --tab-header-bg: rgba(255,255,255,0);
+    --tab-border-color: #dddddd;
+    --tab-text-color: #000000;
+    --tab-content-bg: '#ffffff';
 }
 .tabs {
     width: 100%;
@@ -22,8 +27,10 @@
     padding: 10px 20px;
     margin-right: 5px;
     cursor: pointer;
-    border: 1px solid #ddd;
+    border: 1px solid var(--tab-border-color);
     border-bottom: none;
+    color: var(--tab-text-color);
+    background-color: var(--tab-header-bg);
 }
 
 /* Стили для активной вкладки */
@@ -31,8 +38,8 @@
     color: var(--text-color-active);
     position: relative;
     top: 1px;
-    background-color: #fff;
-    border-color: var(--border-tab-color);
+    background-color: var(--tab-header-bg-active);
+    border-color: var(--border-tab-color-active);
 
 }
 
@@ -41,13 +48,14 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    background-color: var(--tab-content-bg);
 }
 
 /* Стили для контейнера с содержимым вкладки */
 .tab-content__item {
     display: none;
     padding: 20px;
-    border: 1px solid  var(--border-tab-color);
+    border: 1px solid  var(--border-tab-color-active);
 }
 
 /* Стили для активного контейнера вкладки */
