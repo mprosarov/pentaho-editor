@@ -1,0 +1,39 @@
+:root{
+    --e-button-group-border-radius:4px
+}
+.e-button-group{
+    display: flex;
+}
+.e-button-group .e-button-group_item{
+    padding: 0 11px;
+    border: 1px solid #666666;
+    border-color: rgba(117, 117, 117, 0.25);
+    // background-image: linear-gradient(#f7f8fa, #e7e9ec);
+    background-color: rgba(93, 101, 133, 0.1);
+    cursor: pointer;
+    transition: all .1s;
+}
+.e-button-group_item>i{
+    font-size: 24px;
+    color: #494949;
+}
+.e-button-group .e-button-group_item:not(:last-child){
+    border-right: none;
+}
+.e-button-group .e-button-group_item:last-child{
+    border-top-right-radius: var(--e-button-group-border-radius);
+    border-bottom-right-radius: var(--e-button-group-border-radius);
+}
+.e-button-group .e-button-group_item:first-child{
+    border-top-left-radius: var(--e-button-group-border-radius);
+    border-bottom-left-radius: var(--e-button-group-border-radius);
+}
+.e-button-group.strech>.e-button-group_item{
+    flex:1;
+}
+.e-button-group .e-button-group_item:hover{
+    background-color: rgba(14, 133, 255, 0.24);
+}
+.e-button-group .e-button-group_item.active {
+    background-color: rgba(14, 133, 255, 0.24);
+}

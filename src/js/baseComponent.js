@@ -42,6 +42,8 @@ class HtmlComponent {
     return document.getElementById('base-setting').innerHTML;
   }
   initSettingsEvents(parentSetting){
+    // TODO: сделать, чтоб клик по заголовку блока в любом месте(не только по стрелке) схлопывал/разворачивал блок
+    // Если кликнули по стрелки, то открываем/закрываем блок с настройками
     parentSetting.onclick = function(){
       let toggleBlock = event.target.closest('.s-title_action');
       if (!toggleBlock) return;
@@ -66,6 +68,28 @@ class HtmlComponent {
     let that = this;
     updateAllPadding();
     updateAllMarginInputs()
+    // ===== Настройка размеров =====
+    let wEl = parentSetting.querySelector('[data-base-width="value"]');
+    let hEl = parentSetting.querySelector('[data-base-height="value"]');
+    let wSizeUnits = parentSetting.querySelector('[data-base-width="units"]');
+    let hSizeUnits = parentSetting.querySelector('[data-base-height="units"]');
+    if (this.nodeElement.style.width.endsWith('px')){
+      wSizeUnits.value = 'px';
+    } else if (this.nodeElement.style.width.endsWith('%')){
+      wSizeUnits.value = '%';
+    }
+    if (this.nodeElement.style.height.endsWith('px')) {
+      hSizeUnits.value = 'px';
+    } else if (this.nodeElement.style.height.endsWith('%')) {
+      hSizeUnits.value = '%';
+    }
+    wEl.value = parseInt(this.nodeElement.style.width) || '';
+    hEl.value = parseInt(this.nodeElement.style.height) || '';
+    wEl.onchange = () => { that.nodeElement.style.width = `${wEl.value}${wSizeUnits.value}` }
+    hEl.onchange = () => { that.nodeElement.style.height = `${hEl.value}${hSizeUnits.value}` }
+    wSizeUnits.onchange = () => { that.nodeElement.style.width = `${wEl.value}${wSizeUnits.value}` }
+    hSizeUnits.onchange = () => { that.nodeElement.style.height = `${hEl.value}${hSizeUnits.value}` }
+    // ----- end -----
     //Обновить все значения в полях ввода padding'a
     function updateAllPadding(){
       if(styles.padding.split(' ').length>1) paddingInput.value = '';
@@ -115,6 +139,42 @@ class HtmlComponent {
     marginRightInput.onchange = () => { setMarginStyle(marginRightInput, 'marginRight'); }
     marginTopInput.onchange = () => { setMarginStyle(marginTopInput, 'marginTop'); }
     marginBottomInput.onchange = () => { setMarginStyle(marginBottomInput, 'marginBottom'); }
+    // ----------------------------------------------
+    // ===== Настройка Типографика ======
+    /** выравнивание */
+    let alignButtonGroup = UtilsEditor.CreateRadioButtonGroup(parentSetting.querySelector('[data-base-font="align"]'), applyTextAlign);
+    function applyTextAlign(btnEl,isActive){
+      let alignValue = btnEl.dataset.align;
+      if(alignValue && isActive) that.nodeElement.style.textAlign = alignValue;
+    }
+    alignButtonGroup.setByData('data-align',this.nodeElement.style.textAlign);
+    /** размер шрифта */
+    let fontSizeValue = parentSetting.querySelector('[data-base-font-size="value"]');
+    let fontSizeUnits = parentSetting.querySelector('[data-base-font-size="units"]');
+    let fontSize;
+    if (this.nodeElement.style.fontSize != ''){
+      fontSize = Helper.parseCss(this.nodeElement.style.fontSize);
+    } else {
+      fontSize = Helper.parseCss(styles.fontSize);
+    }
+    if (fontSize) {
+      fontSizeValue.value = fontSize[0];
+      fontSizeUnits.value = fontSize[1];
+    }
+    fontSizeValue.onchange = function(){
+      that.nodeElement.style.fontSize = `${fontSizeValue.value}${fontSizeUnits.value}`;
+    }
+    fontSizeUnits.onchange = function(){
+      that.nodeElement.style.fontSize = `${fontSizeValue.value}${fontSizeUnits.value}`;
+    }
+    /** цвет текста */
+    let fontColorInput = parentSetting.querySelector('[data-base-color="text"]');
+    // console.log(styles.color);
+    fontColorInput.value = this.nodeElement.style.color;
+    fontColorInput.oninput = function(){
+      that.nodeElement.style.color = this.value;
+    }
+    // ----------------------------------
   }
 
 }

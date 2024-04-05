@@ -6,13 +6,22 @@
     background: none;
     padding: 0 10px;
     border-radius: 3px;
+    vertical-align: middle;
+}
+.header-button[data-fullscreen="true"]>i.icon-expand-outline{
+    display: none;
+}
+.header-button[data-fullscreen="false"]>i.icon-contract-outline{
+    display: none;
 }
 .header-button:hover {
     cursor: pointer;
     border-color: #dee2e6;
     background: none;
 }
-
+.header-button>i{
+    font-size: 1.25rem;
+}
 .header-button>img{
     height: 18px;
 }

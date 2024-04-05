@@ -5,6 +5,7 @@ var browserSync = require("browser-sync").create();
 
 function buildRigger(cb){
     src('src/index.html').pipe(rigger()).pipe(dest('dist/'));
+    src('src/preview.html').pipe(rigger()).pipe(dest('dist/'));
     src("src/js/app.js").pipe(rigger()).pipe(dest("dist/js/"));
     browserSync.reload();
     cb();
@@ -12,6 +13,7 @@ function buildRigger(cb){
 
 function styles(cb) {
     src("src/scss/app.scss").pipe(sass()).pipe(dest('dist/css/'));
+    src("src/scss/preview.scss").pipe(sass()).pipe(dest('dist/css/'));
     browserSync.reload();
     cb();
 }

@@ -7,11 +7,12 @@
     </div>
 </div>
 <div class="header-center">
-    <button class="header-button" title="Предварительный просмотр">
-        <img src="img/eye-outline.svg" alt="">
+    <button class="header-button" onclick="Editor.openPreview()" title="Предварительный просмотр">
+        <i class="icon-eye-outline"></i>
     </button>
-    <button class="header-button" title="На весь экран">
-        <img src="img/expand-outline.svg" alt="">
+    <button class="header-button" data-fullscreen="false" title="На весь экран" id="fullscreen-editor">
+        <i class="icon-expand-outline"></i>
+        <i class="icon-contract-outline"></i>
     </button>
     <button class="header-button" title="Скачать">
         <img src="img/arrow-down-outline.svg" alt="">

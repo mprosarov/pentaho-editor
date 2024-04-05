@@ -1,9 +1,13 @@
-//= tabs.js
+//= _utils-ui.js
 //= baseComponent.js
 //= headerComponent.js
 //= tabsComponent.js
 var Editor = (function() {
   $("#page-zone").sortable({distance:5});
+  // Развернуть/свернуть на весь экран
+  let btnFullScreen = document.getElementById('fullscreen-editor');
+  btnFullScreen.onclick = () => { launchFullScreen(document) }
+
   let $setting = $("#right-sidebar");
   let selectedComponent = null;
   function unselectAll(){
@@ -54,13 +58,51 @@ var Editor = (function() {
     $setting.append(comp.getSettings())
     comp.initSettingsEvents($setting[0]);
   }
-  return {
-    addComponent:addComponent
+  // ===== Переключатель полного экрана =====
+  function launchFullScreen(document) {
+    if (document.documentElement.requestFullScreen) {
+      if (document.FullScreenElement)
+        document.exitFullScreen();
+      else
+        document.documentElement.requestFullScreen().cath((err)=>{ console.log(err.message) });
+      //mozilla
+    } else if (document.documentElement.mozRequestFullScreen) {
+
+      if (document.mozFullScreenElement)
+        document.mozCancelFullScreen();
+      else
+        document.documentElement.mozRequestFullScreen();
+      //webkit
+    } else if (document.documentElement.webkitRequestFullScreen) {
+      if (document.webkitFullscreenElement)
+        document.webkitExitFullscreen();
+      else{
+        document.documentElement.webkitRequestFullScreen();
+      }
+    }
+    fullscreenchanged(document)
   }
+  function fullscreenchanged(doc){
+    if(doc.fullscreenElement){
+      btnFullScreen.dataset.fullscreen = false;
+    } else btnFullScreen.dataset.fullscreen = true;
+  }
+  return {
+    addComponent:addComponent,
+    openPreview: openPreview
+  }
+  // ----- end -----
+  // ===== Открыть предварительный просмотр =====
+  function openPreview(){
+    //Сохраняем страницу в localStorage
+    let dasboardHTML = document.getElementById('page-zone').innerHTML;
+    localStorage.setItem('editor-preview',dasboardHTML);
+    //Открываем страницу с предварительным просмотром в новом окно
+    window.open('preview.html')
+  }
+  // ----- end -----
 })();
 
-
-Tabs();
 
 $(".component-item").draggable({
   helper: "clone",
@@ -74,27 +116,3 @@ $(".dropped-zone").droppable({
   },
 });
 
-// Переключатель полного экрана
-function launchFullScreen(document) {
-  if(document.documentElement.requestFullScreen) {
-
-		if (document.FullScreenElement)
-			document.exitFullScreen();
-		else
-			document.documentElement.requestFullScreen();
-//mozilla
-  } else if(document.documentElement.mozRequestFullScreen) {
-
-		if (document.mozFullScreenElement)
-			document.mozCancelFullScreen();
-		else
-			document.documentElement.mozRequestFullScreen();
-//webkit
-  } else if(document.documentElement.webkitRequestFullScreen) {
-
-		if (document.webkitFullscreenElement)
-			document.webkitExitFullscreen();
-		else
-			document.documentElement.webkitRequestFullScreen();
-  }
-}

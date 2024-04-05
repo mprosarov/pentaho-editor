@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Предварительный просмотр</title>
+    <link rel="stylesheet" href="css/preview.css">
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <div class="wrap-preview" id="preview-page">Превью</div>
+</body>
+<!-- TODO: Вынести в отдельный скрипт -->
+<script>
+    function loadPreviewPage(){
+        let previewPage = document.getElementById('preview-page');
+        let dashboardHTML = localStorage.getItem('editor-preview');
+        if (!dashboardHTML) {
+            previewPage.innerHTML += 'В хранилище нет сохранения для предпросмотра';
+            return;
+        }
+        previewPage.innerHTML = dashboardHTML;
+    }
+    loadPreviewPage();
+    createTabs();
+    function createTabs(){
+        let tabsComponents = document.querySelectorAll('[data-component="pp-tabs"]');
+        for(let i=0;i<tabsComponents.length; i++){
+            let tabs = tabsComponents[i];
+            var jsTriggers = tabs.querySelector(".tab-header").querySelectorAll(".js-tab-trigger");
+
+            jsTriggers.forEach(function (trigger) {
+                trigger.onclick = function () {
+                    var id = this.getAttribute("data-tab"),
+                        content = this.parentNode.nextElementSibling.querySelector(
+                            ':scope>.js-tab-content[data-tab="' + id + '"]'
+                        ),
+                        activeTrigger = this.parentNode.parentNode.querySelector(
+                            ".js-tab-trigger.active"
+                        ),
+                        activeContent = this.parentNode.nextElementSibling.querySelector(
+                            ":scope>.js-tab-content.active"
+                        );
+                    activeTrigger.classList.remove("active");
+                    trigger.classList.add("active");
+
+                    activeContent.classList.remove("active");
+                    content.classList.add("active");
+                };
+            });
+        }
+    }
+</script>
+</html>
