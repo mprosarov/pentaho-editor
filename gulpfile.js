@@ -1,4 +1,4 @@
-const {src,dest,watch} = require('gulp');
+const {src,dest,watch, task, series} = require('gulp');
 const rigger = require("gulp-rigger");
 const sass = require("gulp-sass")(require("sass"));
 var browserSync = require("browser-sync").create();
@@ -18,12 +18,20 @@ function styles(cb) {
     cb();
 }
 
+function copyAssets(cb){
+  console.log('-----------!!!!!!!!!!---------------');
+  src("src/assets/**/*").pipe(dest("dist/assets/"));
+  cb()
+}
+// task(copyAssets);
+// task("default", series("copyAssets"));
 exports.default = function(){
     browserSync.init({
       server: {
         baseDir: "./dist/",
       },
     });
+
     watch("src/*.html",buildRigger);
     watch("src/blocks/*.html", buildRigger);
     watch("src/componentTemplates/*.html", buildRigger);
@@ -31,5 +39,6 @@ exports.default = function(){
     watch("src/js/*.js", buildRigger);
 }
 
+exports.copyAssets = copyAssets;
 exports.buildRigger = buildRigger;
 exports.styles = styles;
