@@ -16,6 +16,7 @@ var Editor = (function() {
     }
     selectedComponent = null;
   }
+  // TODO: Пока временно - переделать потом
   $("#page-zone").click(function(){
     for(let i=0;i<components.length;i++){
       components[i].unselect();

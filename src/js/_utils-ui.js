@@ -2,9 +2,9 @@ const UtilsEditor = (function(){
     const CreateRadioButtonGroup = function(el,clbk){
         return new _createButtonGroup(el,'radio',clbk);
     };
-    const CreateCheckboxButtonGroup = function(el){
-        return new _createButtonGroup(el, "check",clbk);
-    }
+    const CreateCheckboxButtonGroup = function (el, clbk) {
+      return new _createButtonGroup(el, "check", clbk);
+    };
     const _createButtonGroup = function(buttonGroupElement,typeGroup='radio',clbk){
         let cssActive = 'active';
         let btns = buttonGroupElement.querySelectorAll("button.e-button-group_item");
@@ -32,6 +32,7 @@ const UtilsEditor = (function(){
     };
     return {
       CreateRadioButtonGroup: CreateRadioButtonGroup,
+      CreateCheckboxButtonGroup: CreateCheckboxButtonGroup,
     };
 })();
 

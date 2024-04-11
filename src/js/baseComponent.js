@@ -175,6 +175,17 @@ class HtmlComponent {
       that.nodeElement.style.color = this.value;
     }
     // ----------------------------------
+    // ====== Настройка рамок ======
+    /** Рамки(все,слева,справа,вверхняя,нижняя) */
+    let borderWidthAlign = UtilsEditor.CreateCheckboxButtonGroup(parentSetting.querySelector('[data-base-border="visible"]'),aplpyBorderAlign);
+    function aplpyBorderAlign(btnElement,isActive){
+      let borderPosition = btnElement.dataset.border;
+      if(borderPosition=='all' && isActive) that.nodeElement.style.border = `1px solid`;
+      else if(borderPosition=='all' && !isActive) that.nodeElement.style.border = ``;
+      else{
+        that.nodeElement.style[`border${borderPosition}`] = `1px solid`;
+      }
+    }
   }
 
 }
