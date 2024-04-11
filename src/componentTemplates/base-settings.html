@@ -135,16 +135,31 @@
             <div class="s-title_text">Рамки</div>
             <div class="s-title_action close"> <i class="icon icon-arrow-down"></i> </div>
         </div>
-        <div class="setting-content" style="display: none;">
+        <div class="setting-content">
                 <div class="setting-row">
                     <div class="setting-col">
                         <div style="margin-bottom: 5px;">Границы</div>
-                        <div class="e-button-group strech" data-base-border="visible">
+                        <div class="e-button-group padding strech" data-base-border="visible">
                             <button class="e-button-group_item" data-border="all"><i class="gg-border-all"></i></button>
                             <button class="e-button-group_item" data-border="Bottom"><i class="gg-border-bottom"></i></button>
                             <button class="e-button-group_item" data-border="Left"><i class="gg-border-left"></i></button>
                             <button class="e-button-group_item" data-border="Right"><i class="gg-border-right"></i></button>
                             <button class="e-button-group_item" data-border="Top"><i class="gg-border-top"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Радиус</span>
+                            <input data-base-border-radius="value" class="settingInput-field" value="">
+                            <select data-base-border-radius="units" class="settingInput-item">
+                                <option value="px">px</option>
+                                <option value="em">em</option>
+                                <option value="rem">rem</option>
+                                <option value="vh">vh</option>
+                                <option value="%">%</option>
+                            </select>
                         </div>
                     </div>
                 </div>

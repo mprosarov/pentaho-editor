@@ -179,13 +179,52 @@ class HtmlComponent {
     /** Рамки(все,слева,справа,вверхняя,нижняя) */
     let borderWidthAlign = UtilsEditor.CreateCheckboxButtonGroup(parentSetting.querySelector('[data-base-border="visible"]'),aplpyBorderAlign);
     function aplpyBorderAlign(btnElement,isActive){
+      applyAllBorderSettings(parentSetting.querySelector('[data-base-border="visible"]'));
+      return;
       let borderPosition = btnElement.dataset.border;
       if(borderPosition=='all' && isActive) that.nodeElement.style.border = `1px solid`;
       else if(borderPosition=='all' && !isActive) that.nodeElement.style.border = ``;
       else{
+        if(isActive)
         that.nodeElement.style[`border${borderPosition}`] = `1px solid`;
       }
     }
+    function applyAllBorderSettings(borderWidthAlign){
+      let btns = borderWidthAlign.querySelectorAll('button');
+      let borderPosition;
+      let isActive;
+      for(let i=0;i<btns.length;i++){
+        let btn = btns[i];
+        borderPosition = btn.dataset.border;
+        isActive = btn.classList.contains('active');
+        if(borderPosition=='all'){
+          if (isActive){
+            that.nodeElement.style.border = `1px solid`;
+            return;
+          }
+          else that.nodeElement.style.border = ``;
+        } else {
+          if (isActive) that.nodeElement.style[`border${borderPosition}`] = `1px solid`;
+          else that.nodeElement.style[`border${borderPosition}`]= ``;
+        }
+
+      }
+    }
+    //------------------------------
+    /** border radius setting */
+    let borderRadiusValue = parentSetting.querySelector('[data-base-border-radius="value"]');
+    let borderRadiusUnits = parentSetting.querySelector('[data-base-border-radius="units"]');
+    let cssBorderRadius = Helper.parseCss(styles.borderRadius);
+    borderRadiusValue.value = cssBorderRadius[0];
+    borderRadiusUnits.value = cssBorderRadius[1];
+    borderRadiusValue.onchange = ()=>{
+      that.nodeElement.style.borderRadius = `${borderRadiusValue.value}${borderRadiusUnits.value}`;
+    }
+    borderRadiusUnits.onchange = ()=>{
+      that.nodeElement.style.borderRadius = `${borderRadiusValue.value}${borderRadiusUnits.value}`;
+    }
+    console.log(cssBorderRadius);
+    //------------------------------
   }
 
 }

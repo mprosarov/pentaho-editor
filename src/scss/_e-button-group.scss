@@ -12,6 +12,12 @@
     background-color: rgba(93, 101, 133, 0.1);
     cursor: pointer;
     transition: all .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.e-button-group.padding .e-button-group_item{
+    padding: 6px 4px;
 }
 .e-button-group_item>i{
     font-size: 24px;
