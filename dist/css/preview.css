@@ -1,0 +1,84 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+:root {
+  --border-tab-color-active: #ff0000;
+  --text-color-active: #ff0000;
+  --tab-header-bg-active: #ffffff;
+  --tab-header-bg: rgba(255,255,255,0);
+  --tab-border-color: #dddddd;
+  --tab-text-color: #000000;
+  --tab-content-bg: "#ffffff";
+}
+
+.tabs {
+  width: 100%;
+}
+
+/* Стили для списка вкладок */
+.tab-header {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+/* Стили для вкладки */
+.tab-header__item {
+  padding: 10px 20px;
+  margin-right: 5px;
+  cursor: pointer;
+  border: 1px solid var(--tab-border-color);
+  border-bottom: none;
+  color: var(--tab-text-color);
+  background-color: var(--tab-header-bg);
+}
+
+/* Стили для активной вкладки */
+.tab-header__item.active {
+  color: var(--text-color-active);
+  position: relative;
+  top: 1px;
+  background-color: var(--tab-header-bg-active);
+  border-color: var(--border-tab-color-active);
+}
+
+/* Стиль для списка контейнеров с содержимым вкладок */
+.tab-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--tab-content-bg);
+}
+
+/* Стили для контейнера с содержимым вкладки */
+.tab-content__item {
+  display: none;
+  padding: 20px;
+  border: 1px solid var(--border-tab-color-active);
+}
+
+/* Стили для активного контейнера вкладки */
+.tab-content__item.active {
+  display: block;
+}
+
+.tab-content__item:empty::before {
+  content: "Перетащите сюда необходимые компоненты";
+  text-align: center;
+  display: block;
+  font-weight: 400;
+  font-size: 26px;
+  color: #696969;
+}

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/coloris/coloris.min.css">
+    <script src="assets/coloris/coloris.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="img/duck-logo.svg" alt="">
+                </div>
+                <div class="logo_text">
+                    КРЯнструктор
+                </div>
+            </div>
+            <div class="header-center">
+                <button class="header-button" onclick="Editor.openPreview()" title="Предварительный просмотр">
+                    <i class="icon-eye-outline"></i>
+                </button>
+                <button class="header-button" data-fullscreen="false" title="На весь экран" id="fullscreen-editor">
+                    <i class="icon-expand-outline"></i>
+                    <i class="icon-contract-outline"></i>
+                </button>
+                <button class="header-button" title="Скачать">
+                    <img src="img/arrow-down-outline.svg" alt="">
+                </button>
+            </div>
+            <div class="header-right">
+                <button class="header-button_action" >Сохранить</button>
+            </div>
+        </header>
+        <div class="app-content">
+            <nav class="sidebar-left">
+                <div class="sidebar-wrap">
+                    <div class="components">
+                        <div class="component-item">
+                            <img src="img/comp/table.svg" alt="">
+                            <div class="component-name">Таблица</div>
+                        </div>
+                        <div class="component-item" data-type="header">
+                            <img src="img/comp/heading.svg" alt="">
+                            <div class="component-name">Заголовок</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/button.svg" alt="">
+                            <div class="component-name">Кнопка</div>
+                        </div>
+                        <div class="component-item" data-type="tabs">
+                            <img src="img/comp/tabs.svg" alt="">
+                            <div class="component-name">Табы</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/select_input.svg" alt="">
+                            <div class="component-name">Селект</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/accordion.svg" alt="">
+                            <div class="component-name">Аккардион</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/image.svg" alt="">
+                            <div class="component-name">Изображение</div>
+                        </div>
+                
+                        <div class="component-item">
+                            <img src="img/comp/panel.svg" alt="">
+                            <div class="component-name">Карточка</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/chart.svg" alt="">
+                            <div class="component-name">График</div>
+                        </div>
+                        <div class="component-item">
+                            <img src="img/comp/paragraph.svg" alt="">
+                            <div class="component-name">Параграф</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <main>
+                <div class="dropped-zone" id="page-zone" style="width:100%;height: 100%;">
+                
+                </div>
+            </main>
+            <aside class="sidebar-right">
+                <div class="sidebar-wrap" id="right-sidebar" style="padding: 10px;">
+                    Тут могут быть всякие настройки для компонентов
+                    <input type="text" value="#0037ff8c" data-coloris="https://codepen.io/fixcl/pen/AaBNZB">
+                    <input type="text" value="#000" data-coloris="">
+                </div>
+            </aside>
+        </div>
+
+        <footer class="app-footer">Версия: 0 точка говно не рабочее (с) </footer>
+    </div>
+    <script src="js/app.js"></script>
+    <template id="base-setting">
+        <h4 class="s-main-title" style="margin-top: 0;">Общие настройки</h4>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Внутренние отступы</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content">
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Все</span>
+                            <input data-setting="base-padding" class="settingInput-field">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Слева</span>
+                            <input data-setting="left-padding" class="settingInput-field">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Справа</span>
+                            <input data-setting="right-padding" class="settingInput-field">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Снизу</span>
+                            <input data-setting="bottom-padding" class="settingInput-field">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Сверху</span>
+                            <input data-setting="top-padding" class="settingInput-field">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Внешние отступы</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content">
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Все</span>
+                            <input class="settingInput-field" data-setting="base-all-margin">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Слева</span>
+                            <input class="settingInput-field" data-setting="base-left-margin">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Справа</span>
+                            <input class="settingInput-field" data-setting="base-right-margin">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Снизу</span>
+                            <input class="settingInput-field" data-setting="base-bottom-margin">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Сверху</span>
+                            <input class="settingInput-field" data-setting="base-top-margin">
+                            <span class="settingInput-item">px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Размеры</div>
+                <div class="s-title_action close"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content" style="display: none;">
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Ширина</span>
+                            <input data-base-width="value" class="settingInput-field" value="">
+                            <select data-base-width="units" class="settingInput-item">
+                                <option value="px">px</option>
+                                <option value="%">%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <span class="settingInput-item">Выстота</span>
+                            <input data-base-height="value" class="settingInput-field" value="">
+                            <select data-base-height="units" class="settingInput-item">
+                                <option value="px">px</option>
+                                <option value="%">%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Рамки</div>
+                <div class="s-title_action close"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content">
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            <div style="margin-bottom: 5px;">Границы</div>
+                            <div class="e-button-group padding strech" data-base-border="visible">
+                                <button class="e-button-group_item" data-border="all"><i class="gg-border-all"></i></button>
+                                <button class="e-button-group_item" data-border="Bottom"><i class="gg-border-bottom"></i></button>
+                                <button class="e-button-group_item" data-border="Left"><i class="gg-border-left"></i></button>
+                                <button class="e-button-group_item" data-border="Right"><i class="gg-border-right"></i></button>
+                                <button class="e-button-group_item" data-border="Top"><i class="gg-border-top"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            <div class="settingInput">
+                                <span class="settingInput-item">Радиус</span>
+                                <input data-base-border-radius="value" class="settingInput-field" value="">
+                                <select data-base-border-radius="units" class="settingInput-item">
+                                    <option value="px">px</option>
+                                    <option value="em">em</option>
+                                    <option value="rem">rem</option>
+                                    <option value="vh">vh</option>
+                                    <option value="%">%</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            Цвет границы
+                        </div>
+                        <div class="setting-col">
+                            <div class="settingInput">
+                                <input type="text" class="settingInput-field" data-base-border-color value="#000" data-coloris="">
+                            </div>
+    
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Типографика</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+                <div class="setting-content">
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            <div class="settingInput">
+                                <span class="settingInput-item">Размер шрифта</span>
+                                <input data-base-font-size="value" class="settingInput-field" value="">
+                                <select data-base-font-size="units" class="settingInput-item">
+                                    <option value="px">px</option>
+                                    <option value="em">em</option>
+                                    <option value="rem">rem</option>
+                                    <option value="vh">vh</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            <div style="margin-bottom: 5px;">Выравнивание</div>
+                            <div class="e-button-group strech" data-base-font="align">
+                                <button class="e-button-group_item" data-align="left"><i class="la-align-left las"></i></button>
+                                <button class="e-button-group_item" data-align="center"><i class="la-align-center las"></i></button>
+                                <button class="e-button-group_item" data-align="right"><i class="la-align-right las"></i></button>
+                                <button class="e-button-group_item" data-align="justify"><i class="la-align-justify las"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-col">
+                            Цвет текста
+                        </div>
+                        <div class="settingInput">
+                            <input style="padding: 2px;block-size: 27px;" data-base-color="text" type="color">
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </template>
+    <!-- TODO: Создать класс для input'ов устанавливающих цвет, а не в style писать -->
+    <template id="tabs-component">
+        <div class="tabs" data-component="pp-tabs" style="padding: 20px;--tab-header-bg-active:#ffffff;--tab-border-color:#dddddd;--tab-text-color: #000000;--tab-header-bg: rgba(255,255,255,0);--tab-content-bg:#ffffff;">
+            <ul class="tab-header">
+                <li class="tab-header__item js-tab-trigger active" data-tab="1">Первая</li>
+                <li class="tab-header__item js-tab-trigger" data-tab="2">Вторая</li>
+                <li class="tab-header__item js-tab-trigger" data-tab="3">Третья</li>
+            </ul>
+            <ul class="tab-content">
+                <li class="tab-content__item js-tab-content active" data-tab="1"></li>
+                <li class="tab-content__item js-tab-content" data-tab="2"></li>
+                <li class="tab-content__item js-tab-content" data-tab="3"></li>
+            </ul>
+        </div>
+    </template>
+    <template id="tabs-settings">
+        <h4 class="s-main-title">Настройки компонента</h4>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Оформление</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content">
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Цвет рамки активного таба
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-color" type="color">
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Цвет рамки неактивного таба
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-border-color" type="color">
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Цвет текста активного таба
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-text-color" type="color">
+                    </div>
+                </div>
+    
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Цвет текста неактивного таба
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-text-color" type="color">
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Фон заголовка активной вкладки
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="active-tab-header-bg" type="color">
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Фон заголовка неактивной вкладки
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-header-bg" type="color">
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-col">
+                        Фон контента вкладки
+                    </div>
+                    <div class="settingInput">
+                        <input style="padding: 2px;block-size: 27px;" data-inp-st="tab-content-bg" type="color">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Управление вкладками</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content" >
+                <div data-section="tabs-control"></div>
+    
+            </div>
+        </div>
+    </template>
+    <template id="header-component">
+        <h1 style="margin:20px">Новый заголовок</h1>
+    </template>
+    <template id="header-settings">
+        <h4 class="s-main-title">Настройки компонента</h4>
+        <div class="setting-block">
+            <div class="s-title">
+                <div class="s-title_text">Текст заголовка</div>
+                <div class="s-title_action"> <i class="icon icon-arrow-down"></i> </div>
+            </div>
+            <div class="setting-content">
+                <div class="setting-row">
+                    <div class="setting-col">
+                        <div class="settingInput">
+                            <input data-inp="header-value" class="settingInput-field" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
