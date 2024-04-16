@@ -2,6 +2,7 @@
 //= baseComponent.js
 //= headerComponent.js
 //= tabsComponent.js
+Coloris({ inline: false, format: "hex" });
 var Editor = (function() {
   $("#page-zone").sortable({distance:5});
   // Развернуть/свернуть на весь экран

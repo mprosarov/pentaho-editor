@@ -200,18 +200,21 @@ class HtmlComponent {
         if(borderPosition=='all'){
           if (isActive){
             that.nodeElement.style.border = `1px solid`;
+            that.nodeElement.style.borderColor = borderColorInput.value;
             return;
           }
           else that.nodeElement.style.border = ``;
         } else {
-          if (isActive) that.nodeElement.style[`border${borderPosition}`] = `1px solid`;
-          else that.nodeElement.style[`border${borderPosition}`]= ``;
+          if (isActive){
+            that.nodeElement.style[`border${borderPosition}`] = `1px solid`;
+            that.nodeElement.style.borderColor = borderColorInput.value;
+          } else that.nodeElement.style[`border${borderPosition}`]= ``;
         }
 
       }
     }
     //------------------------------
-    /** border radius setting */
+    /** Закругление рамок */
     let borderRadiusValue = parentSetting.querySelector('[data-base-border-radius="value"]');
     let borderRadiusUnits = parentSetting.querySelector('[data-base-border-radius="units"]');
     let cssBorderRadius = Helper.parseCss(styles.borderRadius);
@@ -223,8 +226,17 @@ class HtmlComponent {
     borderRadiusUnits.onchange = ()=>{
       that.nodeElement.style.borderRadius = `${borderRadiusValue.value}${borderRadiusUnits.value}`;
     }
-    console.log(cssBorderRadius);
     //------------------------------
+    /** Цвет рамок */
+    let borderColorInput = parentSetting.querySelector("[data-base-border-color]");
+    let currentBorderColor = '';
+    if(that.nodeElement.style.borderColor != '') currentBorderColor = that.nodeElement.style.borderColor;
+
+    borderColorInput.value = styles.borderColor;
+    Coloris.wrap(borderColorInput);
+    borderColorInput.oninput = ()=>{
+      that.nodeElement.style.borderColor = borderColorInput.value;
+    }
   }
 
 }
