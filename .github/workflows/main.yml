@@ -4,7 +4,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: cbrgm/telegram-github-action@v1
+      - uses: cbrgm/telegram-github-action@latest
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: -1005274947417  # ← ТВОЙ ID группы!
