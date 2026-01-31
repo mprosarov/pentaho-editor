@@ -7,6 +7,6 @@ jobs:
       - uses: appleboy/telegram-action@master
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          to: 5274947417
+          to: -5274947417
           message: Bot rabotaet v gruppe! OK  
 
