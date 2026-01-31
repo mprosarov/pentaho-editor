@@ -1,0 +1,11 @@
+name: Test group access
+on: [workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cbrgm/telegram-github-action@v1
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          to: -1005274947417  # ← ТВОЙ ID группы!
+          message: "✅ Bot работает в группе!"
